@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Itinerary-board/static/css/main.e6c13ad2.css",
+    "main.js": "/Itinerary-board/static/js/main.ebe40026.js",
+    "static/js/787.87db6e1b.chunk.js": "/Itinerary-board/static/js/787.87db6e1b.chunk.js",
+    "index.html": "/Itinerary-board/index.html",
+    "main.e6c13ad2.css.map": "/Itinerary-board/static/css/main.e6c13ad2.css.map",
+    "main.ebe40026.js.map": "/Itinerary-board/static/js/main.ebe40026.js.map",
+    "787.87db6e1b.chunk.js.map": "/Itinerary-board/static/js/787.87db6e1b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.ebe40026.js"
+  ]
+}
