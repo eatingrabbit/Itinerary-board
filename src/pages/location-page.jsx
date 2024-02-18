@@ -1,39 +1,43 @@
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "../components/header";
 import PostItem from "../components/post-item";
 import SearchOptionSettingSection from "../components/search-option-setting-section";
-
+import {PostListInner} from "../components/inner";
+import axios from "axios";
 
 const LocationPage=()=>{
     const {locationId} = useParams();
+    const [postList, setPostList] = useState([]);
+    
+    useEffect(()=>{
+        axios.get(`/post-search?page=1`)
+        .then((result)=>{
+            console.log(result.data);
+            setPostList([...result.data.postList])
+        })
+        .catch((e)=>{
+            console.log(e)
+        })
+        .finally(()=>{
+            
+        });
+    }, [])
+    
     return (
         <div>
             <Header />
-            <Inner>
+            <PostListInner>
                 <SearchOptionSettingSection locationId={locationId} />
-                <PostItem></PostItem>
-                <PostItem></PostItem>
-                <PostItem></PostItem>
-                <PostItem></PostItem>
-                <PostItem></PostItem>
-            </Inner>
+                {
+                    postList.map(
+                        (postInfo)=><PostItem postInfo={postInfo}/>
+                    )
+                }
+            </PostListInner>
         </div>
     )
 }
-
-const Inner=styled.div`
-    margin: 0 auto;
-    // background-color: #aaa;
-    max-width: 1000px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    // @media only screen and (min-width:1200px){
-    //     .inner{
-    //         max-width: 1200px;
-    //     }
-    // }
-`;
 
 export default LocationPage;

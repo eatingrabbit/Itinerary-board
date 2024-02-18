@@ -2,20 +2,36 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
+import dummyPostInfo from "./dummyPostInfo";
+import BookmarkButton from "./bookmark-button";
+import tagIdTotagName from "../policies/tagIdToTagName";
 
-const PostItem=styled(({className})=>{
+const PostItem=styled(({className, postInfo})=>{
     return <div className={className}>
         <PostContainer>
-            <PostTitle>3박4일 여행 후기</PostTitle>
-            <PostDateAndTravelDaysContainer>
-                <PostDate>2023.8.23</PostDate>
-                <Divider>|</Divider>
-                <PostTravelDays>3박 4일</PostTravelDays>
-            </PostDateAndTravelDaysContainer>
-            <PostContent>이것은 설명입니다 매우 긴 설명 꾸어엉 꾸엉꾸엉 꾸어엉 꾸엉꾸엉 꾸어엉 꾸엉꾸엉 꾸어엉 꾸엉꾸엉</PostContent>
-            <PostBookmarkButton />
+            <Column>
+                <PostTitle postId={postInfo["postId"]}>{postInfo["postTitle"]}</PostTitle>
+                <Row>
+                    <PostUserName>{postInfo["writerUserName"]}</PostUserName>
+                    <Divider />
+                    <PostDate>{postInfo["postDate"]}</PostDate>
+                </Row>
+                <PostContent postId={postInfo["postId"]}>
+                {postInfo["postContent"]}
+                </PostContent>
+            </Column>
+            <PostMetaDataRow>
+                <Row>
+                    <PostTravelDays>
+                        {postInfo["postTripDays"]-1 != 0 && `${postInfo["postTripDays"]-1}박`}
+                        {postInfo["postTripDays"]}일
+                    </PostTravelDays>
+                    <TagOptionRow tagList = {tagIdTotagName(postInfo["tagIdList"])}/>
+                </Row>
+                <BookmarkButton isBookmarked={postInfo["bookmared"]}/>
+            </PostMetaDataRow>
         </PostContainer>
-        <PostThumbnail src="https://fun-coding.org/style/images/art/BeginCodingMainSize.jpg" />
+        <PostThumbnail postId={postInfo["postId"]} src="https://fun-coding.org/style/images/art/BeginCodingMainSize.jpg" />
     </div>
 })`
     // background-color: green;
@@ -29,8 +45,15 @@ const PostItem=styled(({className})=>{
     align-items: center;
 `;
 
-const PostThumbnail=styled(({className, src})=>{
-    return <Link to={`/post/1`}>
+const Row = styled.div`
+    display: flex;
+    align-items: center;
+`
+
+const Column = styled.div``
+
+const PostThumbnail=styled(({className, postId, src})=>{
+    return <Link to={`/post/${postId}`}>
         <img src={src} className={className}/>
     </Link>
 })`
@@ -41,13 +64,17 @@ const PostThumbnail=styled(({className, src})=>{
 
 const PostContainer=styled.div`
     width: 600px;
+    height: 100%;
     box-sizing: border-box;
     // padding: 20px;
     margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 `
 
-const PostTitle=styled(({className, children})=>{
-    return <Link to={`/post/1`} className={className}>
+const PostTitle=styled(({className, postId, children})=>{
+    return <Link to={`/post/${postId}`} className={className}>
         <div>{children}</div>
     </Link>
 })`
@@ -60,51 +87,82 @@ const PostTitle=styled(({className, children})=>{
     }
     
     &>*{
+        margin-top: 10px;
         margin-bottom: 10px;
     }
 `;
 
-const PostContent=styled(({className, children})=>{
-    return <Link to={`/post/1`} className={className}>
+const PostTravelDays=styled.div`
+    width: 4rem;
+    font-weight: 600;
+    // color: #5f6caf;
+    margin-right: 1rem;
+`;
+
+const TagOptionRow=styled(({className, tagList})=>{
+    // const tagList = ["안동시", "의성군"];
+    return <div className={className}>
+        {tagList.map(
+            (selectedTag)=>{return <TagItem>#{selectedTag}</TagItem>}
+        )}
+    </div>
+})`
+    // width: 100%;
+    display: flex;
+    align-items: center;
+`;
+
+const TagItem=styled.div`
+    background-color: #F8F9FA;
+    color: #5f6caf;
+    font-weight: 600;
+    
+    border-radius: 30px;
+    padding: 4px 10px;
+    margin: 0 3px;
+    text-align: center;
+`;
+
+const PostContent=styled(({className, postId, children})=>{
+    return <Link to={`/post/${postId}`} className={className}>
         <div>{children}</div>
     </Link>
 })`
+    width: 35rem;
     color: #888;
     line-height: 1.5rem;
     text-decoration: unset;
     &>*{
+        margin-top: 20px;
         margin-bottom: 10px;
     }
+    
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    
+   display: -webkit-box;
+   -webkit-line-clamp: 2; // 원하는 라인수
+   -webkit-box-orient: vertical
 `;
 
-const PostDateAndTravelDaysContainer=styled.div`
+const PostMetaDataRow=styled.div`
     display: flex;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    margin-bottom: 10px;
 `;
 
-const Divider=styled.div`
+const PostUserName = styled.div`
+    font-weight: 500;
+    // padding-right: 1rem;
+`
+
+const Divider=styled(({className})=> <div className={className}>|</div>)`
     color: #ccc;
     margin: 0 5px;
 `
-const PostDate=styled.div``;
-
-const PostTravelDays=styled.div`
-    font-weight: 600;
-    color: #5f6caf;
-`;
-
-const PostBookmarkButton=styled(({className})=>{
-    return <div className={className}>
-        <FontAwesomeIcon icon={faStar} color="#aaa" />
-    </div>
-})`
-    text-align: right;
-    font-size: 1.3rem;
-    margin-right: 10px;
-    &>*:hover{
-        color: orange;
-        cursor: pointer;
-    }
+const PostDate=styled.div`
+    color: #888;
 `;
 
 export default PostItem;

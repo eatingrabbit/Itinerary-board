@@ -5,6 +5,7 @@ import MainPage from './pages/main-page';
 import LocationPage from './pages/location-page';
 import PostPage from './pages/post-page';
 import LoginPage from './pages/login-page';
+import JoinPage from './pages/join-page';
 import reportWebVitals from './reportWebVitals';
 import {
     createBrowserRouter,
@@ -12,6 +13,9 @@ import {
     Link,
 }from "react-router-dom"
 import { SelectedTagListContextProvider } from './context/selected-tag-list-context';
+import { UserContextProvider } from './context/user-context';
+import BookmarkPage from './pages/bookmark-page';
+import UserPage from './pages/user-page';
 
 
 const router=createBrowserRouter([
@@ -28,16 +32,34 @@ const router=createBrowserRouter([
         element: <LoginPage />,
     },
     {
+        path: "/join",
+        element: <JoinPage />,
+    },
+    {
         path: "/post/:postId",
         element: <PostPage />,
+    },
+    {
+        path: "/bookmark",
+        element: <BookmarkPage />,
+    },
+    {
+        path: "/user",
+        element: <UserPage />,
+    },
+    {
+        path: "/create-post",
+        element: <MainPage />,
     },
 ], {basename: "/Itinerary-board"});
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <UserContextProvider>
     <SelectedTagListContextProvider>
     <RouterProvider router={router}></RouterProvider>
     </SelectedTagListContextProvider>
+    </UserContextProvider>
   </React.StrictMode>
 );
 

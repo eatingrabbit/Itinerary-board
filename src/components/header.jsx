@@ -2,11 +2,20 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faUser, faStar, faPen } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate, Link } from "react-router-dom";
-
+import { useContext, useEffect } from "react";
+import { UserContext } from "../context/user-context";
+import loginCheck from "../policies/login-check";
 
 const Header=styled(({className})=>{
-    const isLogined=true;
-    // const isLogined=false;
+    const { user, setUser } = useContext(UserContext);
+    
+    useEffect(()=>{
+        console.log(user)
+        if(user == null){
+            loginCheck(setUser)
+        }
+    },[])
+    
     
     const navigate = useNavigate();
     return(
@@ -14,7 +23,7 @@ const Header=styled(({className})=>{
             <Logo />
             <div style={{"display": "flex"}}>
                 <StyledFontAwesomeIcon icon={faMagnifyingGlass} />
-                {isLogined?
+                {user != null ?
                     <>
                         <StyledFontAwesomeIcon icon={faPen} onClick={()=>{navigate("/create-post")}}/>
                         <StyledFontAwesomeIcon icon={faStar} color="orange" onClick={()=>{navigate("/bookmark")}}/>

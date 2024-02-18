@@ -53,9 +53,13 @@ const TagOptionRow=styled(({className})=>{
     const {selectedTagList} =useContext(SelectedTagListContext);
     return <div className={className}>
         <OptionNameText>시/도</OptionNameText>
-        {selectedTagList.map(
-            (selectedTag)=>{return <TagItem>#{selectedTag}</TagItem>}
-        )}
+        {
+            selectedTagList.length == 0 ? 
+                <TagItem>전체</TagItem>
+            : selectedTagList.map(
+                (selectedTag)=>{return <TagItem>#{selectedTag}</TagItem>}
+            )
+        }
         <TagItem>+</TagItem>
     </div>
 })`
@@ -66,17 +70,15 @@ const TagOptionRow=styled(({className})=>{
 `;
 
 const TagItem=styled.div`
-    // background-color: white;
-    // border: 2px solid #535E99;
-    // color: #5f6caf;
-    
-    border: 2px solid black;
+    background-color: #F8F9FA;
+    color: #5f6caf;
+    font-weight: 600;
     
     // height: 10px;
     // width: 3rem;
     border-radius: 30px;
     padding: 4px 10px;
-    margin: 0 6px;
+    margin: 0 3px;
     text-align: center;
 `;
 
@@ -103,11 +105,11 @@ const TravelDaysInput=styled(({className})=>{
 
 const SearchButton=styled(({className})=>{
     function onClick(){
-        console.log("검색하기")
+        console.log("조회하기")
     }
     return <div className={className} onClick={onClick}>
         <FontAwesomeIcon icon={faMagnifyingGlass} />
-        검색하기
+        조회하기
     </div>
 })`
     width: 8rem;
