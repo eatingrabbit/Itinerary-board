@@ -22,7 +22,7 @@ const Header=styled(({className})=>{
         <header className={className}>
             <Logo />
             <div style={{"display": "flex"}}>
-                <StyledFontAwesomeIcon icon={faMagnifyingGlass} />
+                <StyledFontAwesomeIcon icon={faMagnifyingGlass} onClick={()=>{navigate("/search")}}/>
                 {user != null ?
                     <>
                         <StyledFontAwesomeIcon icon={faPen} onClick={()=>{navigate("/create-post")}}/>

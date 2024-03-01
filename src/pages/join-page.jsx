@@ -71,7 +71,7 @@ const JoinForm = styled(({className})=>{
         )
         .then((result)=>{
             if(result.data.userName==null){
-                return alert("이메일이 중복됩니다. 다른 이메일을 사용해 주세요.")
+                return alert("이메일 혹은 유저이름이 중복됩니다. 다른 이메일을 사용해 주세요.")
             }
             else{
                 alert("회원가입에 성공했습니다!")

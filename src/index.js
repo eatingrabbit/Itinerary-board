@@ -16,6 +16,7 @@ import { SelectedTagListContextProvider } from './context/selected-tag-list-cont
 import { UserContextProvider } from './context/user-context';
 import BookmarkPage from './pages/bookmark-page';
 import UserPage from './pages/user-page';
+import SearchPage from './pages/search-page';
 
 
 const router=createBrowserRouter([
@@ -50,6 +51,10 @@ const router=createBrowserRouter([
     {
         path: "/create-post",
         element: <MainPage />,
+    },
+    {
+        path: "/search",
+        element: <SearchPage />,
     },
 ], {basename: "/Itinerary-board"});
 const root = ReactDOM.createRoot(document.getElementById('root'));

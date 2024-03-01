@@ -15,7 +15,7 @@ const UserPage=styled(({className})=>{
     const onClickLogout = (e)=>{
         e.preventDefault()
             
-        axios.get(
+        axios.post(
             '/user/logout',
         )
         .then((result)=>{

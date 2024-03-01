@@ -50,6 +50,8 @@ const LoginForm = styled(({className})=>{
             return alert("Password를 입력하세요.")
         }
         
+        console.log(userEmail)
+        console.log(userPassword)
         axios.post(
             '/user/login',
             {
