@@ -51,7 +51,6 @@ const LoginForm = styled(({className})=>{
         }
         
         console.log(userEmail)
-        console.log(userPassword)
         axios.post(
             '/user/login',
             {
